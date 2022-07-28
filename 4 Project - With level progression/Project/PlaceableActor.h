@@ -19,14 +19,15 @@ enum class ActorType
 	Goal,
 	Key,
 	Money,
-	Player
+	Player,
+	Portal
 };
 
-class PlacableActor
+class PlaceableActor
 {
 public:
-	PlacableActor(int x, int y, ActorColor color = ActorColor::Regular);
-	virtual ~PlacableActor();
+	PlaceableActor(int x, int y, ActorColor color = ActorColor::Regular);
+	virtual ~PlaceableActor();
 
 	int GetXPosition();
 	int GetYPosition();

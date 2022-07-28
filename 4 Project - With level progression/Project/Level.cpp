@@ -9,6 +9,7 @@
 #include "Door.h"
 #include "Goal.h"
 #include "Money.h"
+#include "Portal.h"
 
 using namespace std;
 
@@ -115,6 +116,7 @@ bool Level::IsWall(int x, int y)
 bool Level::ConvertLevel(int* playerX, int* playerY)
 {
 	bool anyWarnings = false;
+	std::vector<Portal*> portals;
 	for (int y = 0; y < m_height; ++y)
 	{
 		for (int x = 0; x < m_width; ++x)
@@ -181,6 +183,11 @@ bool Level::ConvertLevel(int* playerX, int* playerY)
 				m_pLevelData[index] = ' '; // clear the level
 				break;
 				break;
+			case '&':
+				m_pLevelData[index] = ' ';
+				portals.push_back(new Portal(x, y));
+				m_pActors.push_back(portals.back());
+				break;
 			case ' ':
 				break;
 			default:
@@ -189,6 +196,14 @@ bool Level::ConvertLevel(int* playerX, int* playerY)
 				break;
 			}
 		}
+	}
+
+	// iterate through vector of portals and set destination to player's starting position
+
+	while (!portals.empty())
+	{
+		portals.back()->SetDestination(*playerX, *playerY);
+		portals.pop_back();
 	}
 
 	return anyWarnings;
@@ -200,9 +215,9 @@ int Level::GetIndexFromCoordinates(int x, int y)
 }
 
 // Updates all actors and returns a colliding actor if there is one
-PlacableActor* Level::UpdateActors(int x, int y)
+PlaceableActor* Level::UpdateActors(int x, int y)
 {
-	PlacableActor* collidedActor = nullptr;
+	PlaceableActor* collidedActor = nullptr;
 
 	for (auto actor = m_pActors.begin(); actor != m_pActors.end(); ++actor)
 	{

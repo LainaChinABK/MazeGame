@@ -10,6 +10,7 @@
 #include "Door.h"
 #include "Money.h"
 #include "Goal.h"
+#include "Portal.h"
 #include "AudioManager.h"
 #include "Utility.h"
 #include "StateMachineExampleGame.h"
@@ -144,7 +145,7 @@ bool GameplayState::Update(bool processInput)
 
 void GameplayState::HandleCollision(int newPlayerX, int newPlayerY)
 {
-	PlacableActor* collidedActor = m_pLevel->UpdateActors(newPlayerX, newPlayerY);
+	PlaceableActor* collidedActor = m_pLevel->UpdateActors(newPlayerX, newPlayerY);
 	if (collidedActor != nullptr && collidedActor->IsActive())
 	{
 		switch (collidedActor->GetType())
@@ -213,6 +214,13 @@ void GameplayState::HandleCollision(int newPlayerX, int newPlayerY)
 				m_player.SetPosition(newPlayerX, newPlayerY);
 			}
 			break;
+		}		
+		case ActorType::Portal:
+		{
+			Portal* collidedPortal = dynamic_cast<Portal*>(collidedActor);
+			assert(collidedPortal);
+			m_player.SetPosition(collidedPortal->GetXDestination(), collidedPortal->GetYDestination());
+			break;
 		}
 		case ActorType::Goal:
 		{
@@ -223,6 +231,7 @@ void GameplayState::HandleCollision(int newPlayerX, int newPlayerY)
 			m_beatLevel = true;
 			break;
 		}
+
 		default:
 			break;
 		}
