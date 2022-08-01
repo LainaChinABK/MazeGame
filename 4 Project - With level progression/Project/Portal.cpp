@@ -8,6 +8,11 @@ Portal::Portal(int x, int y, int dx, int dy)
 
 }
 
+Portal::~Portal()
+{
+
+}
+
 void Portal::Draw()
 {
 	std::cout << "&";

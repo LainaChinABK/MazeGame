@@ -134,7 +134,7 @@ bool GameplayState::Update(bool processInput)
 			else
 			{
 				// On to the next level
-				Load();
+				Load(); 		
 			}
 
 		}
@@ -192,6 +192,7 @@ void GameplayState::HandleCollision(int newPlayerX, int newPlayerY)
 		}
 		case ActorType::Door:
 		{
+			// BUG: doors open regardless of whether player has key
 			Door* collidedDoor = dynamic_cast<Door*>(collidedActor);
 			assert(collidedDoor);
 			if (!collidedDoor->IsOpen())

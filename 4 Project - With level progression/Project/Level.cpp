@@ -199,11 +199,14 @@ bool Level::ConvertLevel(int* playerX, int* playerY)
 	}
 
 	// iterate through vector of portals and set destination to player's starting position
-
 	while (!portals.empty())
 	{
-		portals.back()->SetDestination(*playerX, *playerY);
-		portals.pop_back();
+		if (playerX != nullptr && playerY != nullptr)
+		{
+			portals.back()->SetDestination(*playerX, *playerY);
+			portals.pop_back();
+		}
+		
 	}
 
 	return anyWarnings;

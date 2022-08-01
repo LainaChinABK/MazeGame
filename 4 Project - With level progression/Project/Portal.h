@@ -7,6 +7,8 @@ class Portal :
 {
 public:
     Portal(int x, int y, int dx = -1, int dy = -1);
+    ~Portal();
+
     virtual void Draw() override;
 
     virtual ActorType GetType() override { return ActorType::Portal; }
