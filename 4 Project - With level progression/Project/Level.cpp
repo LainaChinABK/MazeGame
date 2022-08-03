@@ -224,13 +224,17 @@ PlaceableActor* Level::UpdateActors(int x, int y)
 
 	for (auto actor = m_pActors.begin(); actor != m_pActors.end(); ++actor)
 	{
-		(*actor)->Update(); // Update all actors
-
-		if (x == (*actor)->GetXPosition() && y == (*actor)->GetYPosition())
+		// check that actor is active before updating
+		if ((*actor)->IsActive())
 		{
-			// should only be able to collide with one actor
-			assert(collidedActor == nullptr);
-			collidedActor = (*actor);
+			(*actor)->Update(); // Update all actors
+
+			if (x == (*actor)->GetXPosition() && y == (*actor)->GetYPosition())
+			{
+				// should only be able to collide with one actor
+				assert(collidedActor == nullptr);
+				collidedActor = (*actor);
+			}
 		}
 	}
 

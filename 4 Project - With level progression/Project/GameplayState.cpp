@@ -152,7 +152,7 @@ void GameplayState::BeatLevel()
 void GameplayState::HandleCollision(int newPlayerX, int newPlayerY)
 {
 	PlaceableActor* collidedActor = m_pLevel->UpdateActors(newPlayerX, newPlayerY);
-	if (collidedActor != nullptr && collidedActor->IsActive())
+	if (collidedActor != nullptr)
 	{
 		switch (collidedActor->GetType())
 		{
