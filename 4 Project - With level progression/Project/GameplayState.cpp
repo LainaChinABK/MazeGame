@@ -117,30 +117,36 @@ bool GameplayState::Update(bool processInput)
 	}
 	if (m_beatLevel)
 	{
-		++m_skipFrameCount;
-		if (m_skipFrameCount > kFramesToSkip)
-		{
-			m_beatLevel = false;
-			m_skipFrameCount = 0;
-			++m_currentLevel;
-			if (m_currentLevel == m_LevelNames.size())
-			{
-				Utility::WriteHighScore(m_player.GetMoney());
-
-				AudioManager::GetInstance()->PlayWinSound();
-				
-				m_pOwner->LoadScene(StateMachineExampleGame::SceneName::Win);
-			}
-			else
-			{
-				// On to the next level
-				Load(); 		
-			}
-
-		}
+		BeatLevel();
 	}
 
 	return false;
+}
+
+// added function to call when player beats level
+void GameplayState::BeatLevel()
+{
+	++m_skipFrameCount;
+	if (m_skipFrameCount > kFramesToSkip)
+	{
+		m_beatLevel = false;
+		m_skipFrameCount = 0;
+		++m_currentLevel;
+		if (m_currentLevel == m_LevelNames.size())
+		{
+			Utility::WriteHighScore(m_player.GetMoney());
+
+			AudioManager::GetInstance()->PlayWinSound();
+
+			m_pOwner->LoadScene(StateMachineExampleGame::SceneName::Win);
+		}
+		else
+		{
+			// On to the next level
+			Load();
+		}
+
+	}
 }
 
 void GameplayState::HandleCollision(int newPlayerX, int newPlayerY)
@@ -192,7 +198,6 @@ void GameplayState::HandleCollision(int newPlayerX, int newPlayerY)
 		}
 		case ActorType::Door:
 		{
-			// BUG: doors open regardless of whether player has key
 			Door* collidedDoor = dynamic_cast<Door*>(collidedActor);
 			assert(collidedDoor);
 			if (!collidedDoor->IsOpen())
