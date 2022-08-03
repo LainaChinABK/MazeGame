@@ -2,6 +2,7 @@
 #include <windows.h>
 
 #include "Key.h"
+#include "Player.h"
 
 void Key::Draw()
 {
@@ -14,6 +15,13 @@ void Key::Draw()
 
 void Key::HandleCollision(PlaceableActor& player)
 {
-	// TODO: implement
+	Player& m_player = dynamic_cast<Player&>(player);
+	if (!m_player.HasKey())
+	{
+		m_player.PickupKey(this);
+		Remove();
+		m_player.SetPosition(GetXPosition(), GetYPosition());
+		AudioManager::GetInstance()->PlayKeyPickupSound();
+	}
 }
 

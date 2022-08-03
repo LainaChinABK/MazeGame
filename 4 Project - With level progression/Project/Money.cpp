@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Money.h"
+#include "Player.h"
 
 Money::Money(int x, int y, int worth)
 	: PlaceableActor(x, y)
@@ -15,5 +16,8 @@ void Money::Draw()
 
 void Money::HandleCollision(PlaceableActor& player)
 {
-	// TODO: implement
+	AudioManager::GetInstance()->PlayMoneySound();
+	Remove();
+	dynamic_cast<Player&>(player).AddMoney(GetWorth());
+	player.SetPosition(GetXPosition(), GetYPosition());
 }

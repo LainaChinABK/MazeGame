@@ -20,7 +20,7 @@ void Portal::Draw()
 
 void Portal::HandleCollision(PlaceableActor& player)
 {
-	// TODO: implement
+	player.SetPosition(m_destX, m_destY);
 }
 
 void Portal::SetDestination(int x, int y)

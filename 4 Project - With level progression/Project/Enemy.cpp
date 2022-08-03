@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "Player.h"
 #include <iostream>
 
 Enemy::Enemy(int x, int y, int deltaX, int deltaY)
@@ -35,8 +36,7 @@ void Enemy::HandleCollision(PlaceableActor& player)
 	AudioManager::GetInstance()->PlayLoseLivesSound();
 	Remove();
 	player.SetPosition(GetXPosition(), GetYPosition());
-	// TODO: figure out how to decrement lives (line below doesn't work)
-	// player.DecrementLives();
+	dynamic_cast<Player&>(player).DecrementLives();
 }
 
 void Enemy::Update()
