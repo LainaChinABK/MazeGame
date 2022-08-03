@@ -9,6 +9,8 @@ public:
 
 	virtual ActorType GetType() override { return ActorType::Money; }
 	virtual void Draw() override;
+	virtual void HandleCollision(PlaceableActor& player) override;
+
 private:
 	int m_worth;
 };

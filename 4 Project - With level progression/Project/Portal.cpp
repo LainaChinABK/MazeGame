@@ -18,6 +18,11 @@ void Portal::Draw()
 	std::cout << "&";
 }
 
+void Portal::HandleCollision(PlaceableActor& player)
+{
+	// TODO: implement
+}
+
 void Portal::SetDestination(int x, int y)
 {
 	m_destX = x;

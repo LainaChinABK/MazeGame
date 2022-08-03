@@ -30,6 +30,15 @@ void Enemy::Draw()
 	std::cout << (char)153;
 }
 
+void Enemy::HandleCollision(PlaceableActor& player)
+{
+	AudioManager::GetInstance()->PlayLoseLivesSound();
+	Remove();
+	player.SetPosition(GetXPosition(), GetYPosition());
+	// TODO: figure out how to decrement lives (line below doesn't work)
+	// player.DecrementLives();
+}
+
 void Enemy::Update()
 {
 	if (m_movementInX != 0)

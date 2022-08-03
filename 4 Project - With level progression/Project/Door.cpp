@@ -24,3 +24,8 @@ void Door::Draw()
 	std::cout << "|";
 	SetConsoleTextAttribute(console, (int)ActorColor::Regular);
 }
+
+void Door::HandleCollision(PlaceableActor& player)
+{
+	// TODO: implement
+}

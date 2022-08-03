@@ -154,17 +154,14 @@ void GameplayState::HandleCollision(int newPlayerX, int newPlayerY)
 	PlaceableActor* collidedActor = m_pLevel->UpdateActors(newPlayerX, newPlayerY);
 	if (collidedActor != nullptr)
 	{
+		// collidedActor->HandleCollision(m_player);
 		switch (collidedActor->GetType())
 		{
 		case ActorType::Enemy:
 		{
-			Enemy* collidedEnemy = dynamic_cast<Enemy*>(collidedActor);
-			assert(collidedEnemy);
-			AudioManager::GetInstance()->PlayLoseLivesSound();
-			collidedEnemy->Remove();
-			m_player.SetPosition(newPlayerX, newPlayerY);
+			collidedActor->HandleCollision(m_player);
 
-			m_player.DecrementLives();
+			// TODO: move/refactor the code from below
 			if (m_player.GetLives() < 0)
 			{
 				//TODO: Go to game over screen

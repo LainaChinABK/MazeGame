@@ -12,3 +12,8 @@ void Money::Draw()
 {
 	std::cout << "$";
 }
+
+void Money::HandleCollision(PlaceableActor& player)
+{
+	// TODO: implement
+}

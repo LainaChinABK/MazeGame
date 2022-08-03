@@ -11,3 +11,9 @@ void Key::Draw()
 	std::cout << "+";
 	SetConsoleTextAttribute(console, (int)ActorColor::Regular);
 }
+
+void Key::HandleCollision(PlaceableActor& player)
+{
+	// TODO: implement
+}
+

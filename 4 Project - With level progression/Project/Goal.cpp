@@ -11,3 +11,8 @@ void Goal::Draw()
 {
 	std::cout << "X";
 }
+
+void Goal::HandleCollision(PlaceableActor& player)
+{
+	// TODO: implement
+}

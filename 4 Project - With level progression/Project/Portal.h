@@ -10,6 +10,7 @@ public:
     ~Portal();
 
     virtual void Draw() override;
+    virtual void HandleCollision(PlaceableActor& player) override;
 
     virtual ActorType GetType() override { return ActorType::Portal; }
 
