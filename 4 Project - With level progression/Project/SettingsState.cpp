@@ -17,24 +17,26 @@ SettingsState::SettingsState(StateMachineExampleGame* pOwner)
 {
 }
 
-bool SettingsState::Update(bool processInput)
+void SettingsState::ProcessInput()
 {
-	if (processInput)
+	int input = _getch();
+	if (input == kEscapeKey || (char)input == kMainMenu)
 	{
-		int input = _getch();
-		if (input == kEscapeKey || (char)input == kMainMenu)
+		m_pOwner->LoadScene(StateMachineExampleGame::SceneName::MainMenu);
+	}
+	else if ((char)input == kSound)
+	{
+		AudioManager::GetInstance()->ToggleSound();
+		if (AudioManager::GetInstance()->IsSoundOn())
 		{
-			m_pOwner->LoadScene(StateMachineExampleGame::SceneName::MainMenu);
-		}
-		else if ((char)input == kSound)
-		{
-			AudioManager::GetInstance()->ToggleSound();
-			if (AudioManager::GetInstance()->IsSoundOn())
-			{
-				AudioManager::GetInstance()->PlayMoneySound();
-			}
+			AudioManager::GetInstance()->PlayMoneySound();
 		}
 	}
+}
+
+
+bool SettingsState::Update(bool processInput)
+{
 	return false;
 }
 

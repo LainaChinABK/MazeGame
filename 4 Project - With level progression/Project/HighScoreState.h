@@ -14,6 +14,7 @@ public:
 	HighScoreState(StateMachineExampleGame* pOwner);
 	~HighScoreState() = default;
 
+	virtual void ProcessInput() override;
 	virtual bool Update(bool processInput = true) override;
 	virtual void Draw() override;
 };

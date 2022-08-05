@@ -61,9 +61,9 @@ void GameplayState::Enter()
 	Load();
 }
 
-bool GameplayState::Update(bool processInput)
+void GameplayState::ProcessInput()
 {
-	if (processInput && !m_beatLevel)
+	if (_kbhit())
 	{
 		int input = _getch();
 		int arrowInput = 0;
@@ -105,47 +105,43 @@ bool GameplayState::Update(bool processInput)
 			m_player.DropKey();
 		}
 
-		// If position never changed
-		if (newPlayerX == m_player.GetXPosition() && newPlayerY == m_player.GetYPosition())
-		{
-			//return false;
-		}
-		else
-		{
-			HandleCollision(newPlayerX, newPlayerY);
-		}
+		HandleCollision(newPlayerX, newPlayerY);
 	}
-	if (m_beatLevel)
-	{
-		BeatLevel();
-	}
+}
+
+bool GameplayState::Update(bool processInput)
+{
+	CheckBeatLevel();
 
 	return false;
 }
 
-// added function to call when player beats level
-void GameplayState::BeatLevel()
+// check whether player beat level
+void GameplayState::CheckBeatLevel()
 {
-	++m_skipFrameCount;
-	if (m_skipFrameCount > kFramesToSkip)
+	if (m_beatLevel)
 	{
-		m_beatLevel = false;
-		m_skipFrameCount = 0;
-		++m_currentLevel;
-		if (m_currentLevel == m_LevelNames.size())
+		++m_skipFrameCount;
+		if (m_skipFrameCount > kFramesToSkip)
 		{
-			Utility::WriteHighScore(m_player.GetMoney());
+			m_beatLevel = false;
+			m_skipFrameCount = 0;
+			++m_currentLevel;
+			if (m_currentLevel == m_LevelNames.size())
+			{
+				Utility::WriteHighScore(m_player.GetMoney());
 
-			AudioManager::GetInstance()->PlayWinSound();
+				AudioManager::GetInstance()->PlayWinSound();
 
-			m_pOwner->LoadScene(StateMachineExampleGame::SceneName::Win);
+				m_pOwner->LoadScene(StateMachineExampleGame::SceneName::Win);
+			}
+			else
+			{
+				// On to the next level
+				Load();
+			}
+
 		}
-		else
-		{
-			// On to the next level
-			Load();
-		}
-
 	}
 }
 

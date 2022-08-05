@@ -32,7 +32,10 @@ public:
 	virtual bool Update(bool processInput = true) override;
 	virtual void Draw() override;
 
-	void BeatLevel();
+	void CheckBeatLevel();
+
+protected:
+	void ProcessInput() override;
 
 private:
 	void HandleCollision(int newPlayerX, int newPlayerY);

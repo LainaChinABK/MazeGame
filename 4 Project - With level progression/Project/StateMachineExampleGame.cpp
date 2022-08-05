@@ -11,6 +11,7 @@ StateMachineExampleGame::StateMachineExampleGame(Game* pOwner)
 	: m_pOwner(pOwner)
 	, m_pCurrentState(nullptr)
 	, m_pNextState(nullptr)
+	, m_gameOver(false)
 {
 }
 
@@ -18,6 +19,11 @@ bool StateMachineExampleGame::Init()
 {
 	LoadScene(SceneName::MainMenu);
 	return true;
+}
+
+void StateMachineExampleGame::ProcessInput()
+{
+	m_pCurrentState->ProcessInput();
 }
 
 bool StateMachineExampleGame::UpdateCurrentState(bool processInput)
@@ -77,9 +83,11 @@ void StateMachineExampleGame::LoadScene(SceneName scene)
 		break;
 	case SceneName::Win:
 		m_pNextState = new WinState(this);
+		m_gameOver = true;
 		break;
 	case SceneName::Lose:
 		m_pNextState = new LoseState(this);
+		m_gameOver = true;
 		break;
 	}
 
