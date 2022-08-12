@@ -37,6 +37,7 @@ bool StateMachineExampleGame::UpdateCurrentState(bool processInput)
 
 	if (m_pCurrentState != nullptr)
 	{
+		// right now the GameState Update function always returns false, not sure if that's an issue
 		done = m_pCurrentState->Update(processInput);
 	}
 	return done;

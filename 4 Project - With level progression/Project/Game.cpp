@@ -25,6 +25,7 @@ void Game::RunGameLoop()
 	{
 		// update with no input
 		Update(false);
+		// TODO: only call draw function during game
 		// Draw
 		Draw();
 		// Update with input

@@ -122,6 +122,8 @@ bool Level::ConvertLevel(int* playerX, int* playerY)
 		for (int x = 0; x < m_width; ++x)
 		{
 			int index = GetIndexFromCoordinates(x, y);
+
+			// TODO: the switch statement below seems very redundant but I'm not quite sure how to refactor it
 			switch (m_pLevelData[index])
 			{
 			case '+':
@@ -182,7 +184,6 @@ bool Level::ConvertLevel(int* playerX, int* playerY)
 				m_pActors.push_back(new Enemy(x, y, 0, 2));
 				m_pLevelData[index] = ' '; // clear the level
 				break;
-				break;
 			case '&':
 				m_pLevelData[index] = ' ';
 				portals.push_back(new Portal(x, y));
@@ -201,10 +202,16 @@ bool Level::ConvertLevel(int* playerX, int* playerY)
 	// iterate through vector of portals and set destination to player's starting position
 	while (!portals.empty())
 	{
+		// TODO: update so that player position doesn't have to get checked with every iteration of the while loop
 		if (playerX != nullptr && playerY != nullptr)
 		{
 			portals.back()->SetDestination(*playerX, *playerY);
 			portals.pop_back();
+		}
+		else
+		{
+			anyWarnings = true;
+			break;
 		}
 		
 	}
@@ -217,6 +224,7 @@ int Level::GetIndexFromCoordinates(int x, int y)
 	return x + y * m_width;
 }
 
+// TODO: incorporate threading so that actors can update without player movement
 // Updates all actors and returns a colliding actor if there is one
 PlaceableActor* Level::UpdateActors(int x, int y)
 {

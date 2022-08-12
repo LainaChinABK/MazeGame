@@ -168,12 +168,7 @@ void GameplayState::HandleCollision(int newPlayerX, int newPlayerY)
 		}
 		case ActorType::Goal:
 		{
-			Goal* collidedGoal = dynamic_cast<Goal*>(collidedActor);
-			assert(collidedGoal);
-			collidedGoal->Remove();
-			m_player.SetPosition(newPlayerX, newPlayerY);
 			m_beatLevel = true;
-			break;
 		}
 
 		default:
